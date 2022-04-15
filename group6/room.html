@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>A-Frame JSNES: WebVR NES emulator</title>
+</head>
+
+<!-- <script src="lib/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script> -->
+<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/v2.2.0/dist/aframe-extras.loaders.min.js"></script>
+
+<!-- for menu overlay -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
+<style>
+      .intro-overlay {
+        z-index: 1;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        max-width: 350px;
+        box-sizing: border-box;
+        padding: 1.5em;
+        color: #FFF;
+        background: rgba(0, 0, 0, 0.75);
+        font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+      }
+      .menu-overlay {
+        z-index: 99999;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        box-sizing: border-box;
+        padding: 1.5em;
+        width: 60px;
+        height: 60px;
+        padding-bottom: 0px;
+        background: rgba(0, 0, 0, 0.5) url(./images/hamburger-white.png) center no-repeat;
+        background-size: 40px 40px;
+        font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+      }
+      .menu-overlay:hover {
+        background: rgba(0, 0, 0, 0.2) url(./images/hamburger-white.png) center no-repeat;
+        background-size: 40px 40px;
+      }
+</style>
+
+
+<body>
+  <a-scene>
+    <a-assets>
+      <canvas id="tvSnowCanvas" width="256" height="256"></canvas>
+      <canvas id="nes-screen" class="nes-screen" width="256" height="240"></canvas>
+      <a-asset-item id="nesRoomPly" src="assets/room-notv.bake.ply"></a-asset-item>
+      <a-asset-item id="tvNES" src="assets/tv-nes.bake.ply"></a-asset-item>
+      <img id="nightSky" src="assets/24564695173_4f8f0ab4ab_o.jpg">
+    </a-assets>
+
+    <a-entity id="cameraWrapper" rotation="0 180 0">
+      <a-entity id="camera" camera look-controls></a-entity>
+    </a-entity>
+
+    <a-video id="nesScreen" src="#nes-screen" width="4" height="3" position="1.25 -0.87 18.48" rotation="0 180 0" scale="0.92 0.92 0.92"></a-video>
+    <a-plane id="tvSnow" src="#tvSnowCanvas" width="4" height="3" position="1.25 -0.87 18.46" rotation="0 180 0" scale="0.92 0.92 0.92"></a-plane>
+    <!-- rotation was -90 0 130 -->
+
+    <a-plane id="backWall" color="black" width="20" height="20" position="1.25 -0.89 22" rotation="0 180 0" scale="1.32 1.40 1"></a-plane>
+    <a-plane id="ceiling" color="black" width="20" height="20" position="0.86 12.71 6.44" rotation="90 180 0" scale="1.32 1.68 1"></a-plane>
+
+    <a-entity ply-model="src: #nesRoomPly" position="1 -4 6.5" scale=".25 .25 .25" rotation="-90 0 0"></a-entity>
+    <a-entity ply-model="src: #tvNES" position="-1.5 -3.5 19.5" scale=".25 .25 .25" rotation="-90 0 0"></a-entity>
+    <a-sky src="#nightSky" rotation="0 -208 0"></a-sky>
+  </a-scene>
+
+</body>
+</html>
